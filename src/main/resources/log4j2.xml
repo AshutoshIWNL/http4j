@@ -13,6 +13,7 @@
     <Loggers>
         <Logger name="com.asm.http4j" level="DEBUG" additivity="false">
             <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="FileAppender"/>
         </Logger>
         <Root level="WARN">
             <AppenderRef ref="ConsoleAppender"/>

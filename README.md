@@ -19,7 +19,7 @@ A lightweight HTTP 1.1 server written in Java - perfect for serving static files
 
 ## ⚙️ Build
 
-Make sure you have **Java 17+** and **Maven** installed.
+Make sure you have **Java 21** and **Maven** installed.
 
 ```bash
 git clone https://github.com/AshutoshIWNL/http4j.git
