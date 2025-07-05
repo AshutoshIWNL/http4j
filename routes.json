@@ -1,0 +1,22 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/hello",
+      "response": {
+        "status": 200,
+        "contentType": "text/plain",
+        "body": "Hello from config!"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/echo",
+      "response": {
+        "status": 200,
+        "contentType": "application/json",
+        "body": "{\"message\":\"Echoed from config\"}"
+      }
+    }
+  ]
+}

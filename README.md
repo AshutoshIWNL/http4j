@@ -1,108 +1,120 @@
 # http4j 🚀
-
-A lightweight HTTP 1.1 server written in Java - perfect for serving static files, testing webhooks, or building your own minimal API server.
+A lightweight, plug-and-play HTTP/1.1 server written in Java - ideal for serving static files, mocking APIs, and rapid prototyping without writing a single line of backend code.
 
 ---
 
 ## ✨ Features
 
-- 📁 Serve static files from any directory
-- 🌐 Built-in routing for GET and POST
-- 🧠 HEAD support
-- 🧪 Clean keep-alive handling
-- 🗂️ Directory listing support
-- 📦 Minimal dependencies (only Log4j & Picocli)
-- 🐞 Optional debug logging
-- 🔧 Configurable port & static root
+- 📁 **Serve static files** from any directory
+- 🔀 **Built-in routing** for GET, POST, HEAD
+- ⚙️ **No-code routing** via `routes.json`
+- 🧠 **Persistent connections** with clean keep-alive handling
+- 🗂️ **Directory listing UI** (auto-index for folders)
+- 🪵 **Minimal dependencies** (`Log4j`, `Jackson`, `Picocli`)
+- 🔧 **CLI configurable** (port, static root, route file)
+- 📦 **Packaged as a single runnable JAR**
+- 🧪 **Built-in unit tests** for request parser
 
 ---
 
-## ⚙️ Build
+## 🚀 Getting Started
 
-Make sure you have **Java 21** and **Maven** installed.
+### 1️⃣ Download or Build
 
 ```bash
-git clone https://github.com/AshutoshIWNL/http4j.git
+git clone https://github.com/yourname/http4j.git
 cd http4j
 mvn clean package
 ```
 
-The JAR will be available in `target/http4j-1.0.jar`.
-
----
-
-## 🚀 Usage
+### 2️⃣ Run the Server
 
 ```bash
-java -jar target/http4j-1.0.jar --debug=true --port 9090 --static-root /path/to/public
+java -jar target/http4j.jar --debug=true --port 9090 --static-root /path/to/public
 ```
 
-### 🛠️ Command Line Options
-
-| Flag             | Description                              | Default     |
-|------------------|------------------------------------------|-------------|
-| `--port`         | Port to start the server on              | `8080`      |
-| `--static-root`  | Directory to serve static files from     | *none*      |
-| `--debug`        | Enables debug-level logging              | `false`     |
-
----
-
-## 🔍 Examples
-
-### Serve a local folder
+Optionally, pass a route config file:
 
 ```bash
-java -jar target/http4j-1.0.jar --static-root ./public
+java -jar target/http4j.jar --debug=true --port 9090 --static-root ./public --routes ./routes.json
 ```
 
-Place files like `index.html`, `favicon.ico`, etc. in `./public`.
+---
 
-Access in browser:
+## 📜 Example: routes.json
 
+```json
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/hello",
+      "response": {
+        "status": 200,
+        "contentType": "text/plain",
+        "body": "Hello from config!"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/echo",
+      "response": {
+        "status": 200,
+        "contentType": "application/json",
+        "body": "{\"message\":\"Echoed from config\"}"
+      }
+    }
+  ]
+}
 ```
-http://localhost:8080/
-```
 
-### Basic API routing
+---
 
-Two routes are available by default:
-
-```http
-GET /hello           → "Hello from Http4j"
-POST /echo           → echoes back the request body
-```
-
-Example:
+## 🧪 API Examples
 
 ```bash
-curl http://localhost:8080/hello
-curl -X POST http://localhost:8080/echo -d "Hi!"
+curl http://localhost:9090/hello
+# → Hello from config!
+
+curl -X POST http://localhost:9090/echo -d "data=123"
+# → {"message":"Echoed from config"}
 ```
 
 ---
 
-## 🧪 Testing
+## 🗂️ Directory Listing
 
-Unit tests are written using JUnit 5.
-
-Run tests with:
-
-```bash
-mvn test
-```
+Start the server with `--static-root` pointing to any folder. Visit `http://localhost:9090/` in your browser and browse files and subfolders with a clean auto-generated UI.
 
 ---
 
-## 🔒 Security
+## 📌 CLI Options
 
-- Basic path traversal protection for static file serving
-- Only `identity` transfer encoding supported (no chunked transfer)
+| Flag            | Description                     | Default        |
+|-----------------|---------------------------------|----------------|
+| `--port`        | Port to bind the server on      | `8080`         |
+| `--static-root` | Path to serve static files from | `.`            |
+| `--routes`      | Path to `routes.json` config    | './routes.json' |
+| `--debug`       | Enable debug logging            | false          |
 
 ---
 
+## 🔧 Dev Notes
+
+- Fully supports core aspects of HTTP/1.1 spec
+- HEAD requests automatically skip response body
+- Handles malformed headers, transfer encoding, and keep-alive
+- Easily embeddable or extendable as a Java library
+
+---
 
 ## 👨‍💻 Author
 
-Made with ❤️ by [Ashutosh Mishra](https://github.com/your-username)
+Built with ❤️ by **Ashutosh Mishra**  
+GitHub: [@AshutoshIWNL](https://github.com/AshutoshIWNL)
 
 ---
+
+## 📄 License
+
+MIT

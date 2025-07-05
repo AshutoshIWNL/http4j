@@ -1,5 +1,6 @@
 package com.asm.http4j;
 
+import com.asm.http4j.config.ConfigRouteLoader;
 import com.asm.http4j.util.ServerInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,6 +47,14 @@ public class Main implements Runnable {
             defaultValue = "false")
     private boolean debug;
 
+    /**
+     * Routes file path
+     */
+    @CommandLine.Option(names = {"--routes"},
+            description = "Path for routes file",
+            defaultValue = "./routes.json")
+    private File routeFile;
+
     @Override
     public void run() {
         configureLogging();
@@ -53,7 +62,7 @@ public class Main implements Runnable {
 
         logger.info("Starting http4j on port {}", port);
 
-        Router router = createRouter();
+        Router router = ConfigRouteLoader.loadFrom(routeFile);
         HttpServer server = new HttpServer(port, router, staticRoot);
         server.start();
     }
@@ -72,14 +81,6 @@ public class Main implements Runnable {
         if (staticRoot != null && (!staticRoot.exists() || !staticRoot.isDirectory())) {
             throw new IllegalArgumentException("Invalid static root: " + staticRoot);
         }
-    }
-
-    private Router createRouter() {
-        Router router = new Router();
-        router.get("/hello", request -> HttpResponse.ok("Hello from Http4j".getBytes(), "text/plain"));
-        router.post("/echo", request -> HttpResponse.ok(request.getBody().getBytes(), "text/plain"));
-
-        return router;
     }
 
     public static void main(String[] args) {
