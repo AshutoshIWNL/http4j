@@ -22,7 +22,7 @@ A lightweight, plug-and-play HTTP/1.1 server written in Java - ideal for serving
 ### 1️⃣ Download or Build
 
 ```bash
-git clone https://github.com/yourname/http4j.git
+git clone https://github.com/AshutoshIWNL/http4j.git
 cd http4j
 mvn clean package
 ```
